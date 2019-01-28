@@ -14,7 +14,8 @@ php:
 
 env:
   global:
-    - WORDHAT_WORDPRESS_VERSION=5.0.3
+    - VOLUME=$TRAVIS_BUILD_DIR
+    - WORDPRESS_VERSION=5.0.3
 
 matrix:
   fast_finish: true
@@ -33,7 +34,7 @@ before_install:
   - composer install --no-interaction --prefer-dist --no-progress
 
 before_script:
-  - VOLUME=$TRAVIS_BUILD_DIR WORDPRESS_VERSION=5.0.3 docker-compose up -d
+  - docker-compose up -d
   - sleep 30  # Less than this time is unreliable on Travis-CI.
   - docker-compose ps
 
