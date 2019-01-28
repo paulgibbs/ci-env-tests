@@ -27,9 +27,10 @@ services:
     security_opt:
       - seccomp:unconfined
     shm_size: 2G
+    tmpfs:
+      - /var/www/html/wp-content/uploads
     volumes:
       - "${VOLUME}:/var/www/html/wp-content:delegated"
-      - uploads_volume:/var/www/html/wp-content/uploads
 
   db:
     image: mysql:5.7
@@ -70,6 +71,3 @@ networks:
     driver: bridge
   backend:
     driver: bridge
-
-volumes:
-  uploads_volume:
