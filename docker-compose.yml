@@ -16,6 +16,9 @@ services:
       WORDPRESS_DEBUG: 1
       WORDPRESS_CONFIG_EXTRA: |
         define( 'WP_DEBUG_DISPLAY', false );
+    networks:
+      - app
+      - backend
     ports:
       - 80:80
     restart: always
@@ -35,6 +38,8 @@ services:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
+    networks:
+      - backend
     ports:
       - 3306:3306
     restart: always
@@ -42,6 +47,8 @@ services:
   selenium:
     image: selenium/standalone-chrome-debug:3.141.59-europium
     container_name: docker_selenium_1
+    networks:
+      - backend
     ports:
       - 4444:4444  # Selenium.
       #- 5900:5900  # VNC, default password = "secret".
@@ -51,6 +58,8 @@ services:
   redis:
     image: redis:4.0-alpine
     container_name: docker_redis_1
+    networks:
+      - backend
     ports:
       - 6379:6379
     restart: always
