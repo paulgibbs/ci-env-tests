@@ -25,6 +25,8 @@ services:
     shm_size: 2G
     volumes:
       - "${VOLUME}:/var/www/html/wp-content:delegated"
+    tmpfs:
+      - /var/www/html/wp-content/uploads
     cap_add:
       - SYS_PTRACE
     security_opt:
