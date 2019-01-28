@@ -37,6 +37,7 @@ before_script:
   - docker-compose up -d
   - sleep 30  # Less than this time is unreliable on Travis-CI.
   - docker-compose ps
+  - docker exec -it --user www-data docker_wordpress_1 sh -c "cd /var/www/html/wp-content && bash bin/install-wordpress.sh $TRAVIS_BUILD_DIR"
   - bash bin/install-wordpress.sh
 
 script:
