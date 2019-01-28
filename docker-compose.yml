@@ -35,8 +35,7 @@ services:
     environment:
       PAGER: more
     restart: always
-    volumes_from:
-      - wordpress:rw
+    volumes_from: wordpress
 
   db:
     image: mysql:5.7
