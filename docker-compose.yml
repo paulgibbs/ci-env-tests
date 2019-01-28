@@ -27,6 +27,16 @@ services:
     security_opt:
       - seccomp:unconfined
 
+  wpcli:
+    image: wordpress:cli-php7.2
+    container_name: docker_wpcli_1
+    depends_on:
+      - wordpress
+    environment:
+      PAGER: more
+    restart: always
+    volumes_from: wordpress
+
   db:
     image: mysql:5.7
     container_name: docker_db_1
