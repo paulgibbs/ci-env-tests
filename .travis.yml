@@ -40,5 +40,5 @@ before_script:
   - docker exec -it --user www-data docker_wordpress_1 sh -c "cd /var/www/html/wp-content && bash bin/install-wordpress.sh $TRAVIS_BUILD_DIR"
 
 script:
-  - docker exec -it --user www-data docker_wordpress_1 sh -c "cd /var/www/html/wp-content && vendor/bin/behat"
+  - docker exec -it --user www-data docker_wordpress_1 sh -c "cd /var/www/html/wp-content && vendor/bin/behat --format progress"
   
