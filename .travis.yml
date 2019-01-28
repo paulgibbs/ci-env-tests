@@ -1,0 +1,42 @@
+dist: xenial
+language: php
+
+addons:
+  apt:
+    sources:
+      - docker-xenial
+
+services:
+  - docker
+
+php:
+  - 7.2
+
+env:
+  global:
+    - WORDHAT_WORDPRESS_VERSION=5.0.3
+
+matrix:
+  fast_finish: true
+
+git:
+  depth: 3
+  quiet: true
+
+#notifications:
+  #email: false
+  #slack:
+    #secure: hello-world
+
+before_install:
+  - composer global require hirak/prestissimo --no-interaction --prefer-dist --no-progress
+  - composer install --no-interaction --prefer-dist --no-progress
+
+before_script:
+  - VOLUME=$TRAVIS_BUILD_DIR WORDPRESS_VERSION=5.0.3 docker-compose up -d
+  - sleep 30  # Less than this time is unreliable on Travis-CI.
+  - docker-compose ps
+
+script:
+  - docker exec -u www-data docker_wordpress_1 sh -c "ls -la /var/www/html/wp-content"
+  

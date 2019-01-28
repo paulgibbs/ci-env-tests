@@ -1,0 +1,9 @@
+{
+    "name": "paulgibbs/paultest",
+    "require-dev": {
+        "paulgibbs/behat-wordpress-extension": "^3.1",
+        "behat/mink-goutte-driver": "^1.2",
+        "behat/mink-selenium2-driver": "^1.3",
+        "wp-cli/wp-cli": "^2.1"
+    }
+}

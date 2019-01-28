@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+  wordpress:
+    image: "wordpress:${WORDPRESS_VERSION}-php7.2"
+    container_name: docker_wordpress_1
+    depends_on:
+      - db
+      - redis
+      - selenium
+    environment:
+      PAGER: more
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'WP_DEBUG_DISPLAY', false );
+    ports:
+      - 80:80
+    restart: always
+    shm_size: 2G
+    volumes:
+      - "${VOLUME}:/var/www/html/wp-content:delegated"
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+
+  db:
+    image: mysql:5.7
+    container_name: docker_db_1
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    ports:
+      - 3306:3306
+    restart: always
+
+  selenium:
+    image: selenium/standalone-chrome-debug:3.141.59-europium
+    container_name: docker_selenium_1
+    ports:
+      - 4444:4444  # Selenium.
+      #- 5900:5900  # VNC, default password = "secret".
+    restart: always
+    shm_size: 2G
+
+  redis:
+    image: redis:4.0-alpine
+    container_name: docker_redis_1
+    ports:
+      - 6379:6379
+    restart: always

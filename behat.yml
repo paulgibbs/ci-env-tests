@@ -1,0 +1,42 @@
+default:
+  suites:
+    default:
+      contexts:
+        - PaulGibbs\WordpressBehatExtension\Context\WordpressContext
+        - FeatureContext
+        - Behat\MinkExtension\Context\MinkContext
+        - PaulGibbs\WordpressBehatExtension\Context\ContentContext
+        - PaulGibbs\WordpressBehatExtension\Context\DashboardContext
+        - PaulGibbs\WordpressBehatExtension\Context\SiteContext
+        - PaulGibbs\WordpressBehatExtension\Context\UserContext
+        - PaulGibbs\WordpressBehatExtension\Context\EditPostContext
+        - PaulGibbs\WordpressBehatExtension\Context\WidgetContext
+        - PaulGibbs\WordpressBehatExtension\Context\DebugContext
+        - PaulGibbs\WordpressBehatExtension\Context\ToolbarContext
+
+  extensions:
+    Behat\MinkExtension:
+      base_url: http://wordpress
+      browser_name: chrome
+      default_session: default
+      javascript_session: selenium2
+      sessions:
+        default:
+          goutte:
+            guzzle_parameters:
+              verify: false  # Allow self-signed SSL certificates
+        selenium2:
+          selenium2:
+            wd_host: "http://selenium:4444/wd/hub"
+
+    PaulGibbs\WordpressBehatExtension:
+      default_driver: wpphp
+      path: /var/www/html
+      users:
+        -
+          roles:
+            - administrator
+          username: admin
+          password: admin
+      database:
+        restore_after_test: true
