@@ -3,6 +3,8 @@ version: "3"
 services:
   wordpress:
     image: "wordpress:${WORDPRESS_VERSION}-php7.2"
+    cap_add:
+      - SYS_PTRACE
     container_name: docker_wordpress_1
     depends_on:
       - db
@@ -22,15 +24,12 @@ services:
     ports:
       - 80:80
     restart: always
+    security_opt:
+      - seccomp:unconfined
     shm_size: 2G
     volumes:
       - "${VOLUME}:/var/www/html/wp-content:delegated"
-    tmpfs:
-      - /var/www/html/wp-content/uploads
-    cap_add:
-      - SYS_PTRACE
-    security_opt:
-      - seccomp:unconfined
+      - uploads_volume:/var/www/html/wp-content/uploads
 
   db:
     image: mysql:5.7
@@ -71,3 +70,6 @@ networks:
     driver: bridge
   backend:
     driver: bridge
+
+volumes:
+  uploads_volume:
