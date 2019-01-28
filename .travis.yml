@@ -10,7 +10,7 @@ services:
   - docker
 
 php:
-  - 7.2
+  - 7.3
 
 env:
   global:
@@ -39,5 +39,5 @@ before_script:
   - docker-compose ps
 
 script:
-  - docker exec -u www-data docker_wordpress_1 sh -c "ls -la /var/www/html/wp-content"
+  - docker exec -u www-data docker_wordpress_1 sh -c "cd /var/www/html/wp-content && vendor/bin/behat"
   
